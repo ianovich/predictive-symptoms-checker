@@ -1,0 +1,149 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}{{title}} - Predictive symptoms{% endblock %}
+{% block content %} 
+{% load tz %}
+{% get_current_timezone as TIME_ZONE %}
+
+<div class="content top-space">
+    <div class="container">
+      {% include 'frontend/partials/messages.html' %}
+      <div class="card">
+        <div class="card-body">
+            <div class="doctor-widget">
+                <div class="doc-info-left">
+                    <div class="doctor-img">
+                      {% if doctor.profile_url %}
+                      <img src="/media/{{ doctor.profile_url }}" class="img-fluid"
+                            alt="User Image">
+                      {% else %}
+                        <img src="{% static 'assets/img/no_img.jpg' %}" class="img-fluid"
+                            alt="User Image">
+                            {% endif %}
+                    </div>
+                    <div class="doc-info-cont">
+                        <h4 class="doc-name">{{ doctor.first_name }} {{ doctor.last_name }}</h4>
+                        <p class="doc-speciality"> {{ doctor.doc_speciality }}</p>
+                        
+                        <div class="clinic-details">
+                            <p class="doc-location"><i class="fas fa-map-marker-alt"></i> {{ doctor.location }}</p>
+                           
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="doc-info-right">
+                    <div class="clini-infos">
+                        <ul>
+                            <li><i class="far fa-thumbs-up"></i> 99%</li>
+                            
+                            <li><i class="fas fa-map-marker-alt"></i> {{ doctor.location }}</li>
+                            <li><i class="far fa-money-bill-alt"></i> Ksh.{{ doctor.service_price }} per 1/2hr </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+
+        <h4>
+          About
+        </h4>
+
+        {% if doctor.user_bio %}
+        <p>
+          {{doctor.user_bio}}
+        </p>
+         {% else %}
+         <p>
+          No Bio Available
+         </p>
+         {% endif %}
+      </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+
+      <h4>
+        Book a session with {{title}}
+      </h4>
+      <div class="card booking-schedule schedule-widget">
+        <div class="schedule-header">
+            <div class="row">
+                <div class="col-md-12">
+                  {% comment %} {{todays_date}} {% endcomment %}
+                    <div class="day-slot">
+                        <ul>
+                                {% for date in date_range %}
+                                  <li>
+                                      <form action="{% url 'doctor_details' doctor.id %}" method="get">
+                                        {% comment %} {% csrf_token %} {% endcomment %}
+                                          <input type="hidden" name="date" value="{{ date|date:'Y-m-d' }}">
+                                          <button class="btn{% if date == selected_date %} btn-primary{% endif %} {% if date|date:'Y-m-d' < todays_date %} disabled{% endif %}" type="submit">
+                                              {{ date }}
+                                          </button>
+                                      </form>
+                                  </li>
+                              {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form action="{% url 'book-appointment' doctor_id=doctor.id date=selected_date %}"
+            method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="date" value="{{ selected_date }}">
+
+            <div class="schedule-cont">
+                <div class="row">
+                    
+                        <div class="time-slot">
+                            <ul class="clearfix">
+                                <div class="row">
+                                  <ul>
+                                    {% for date, slots in available_time_slots.items %}
+                                        {% for slot in slots %}
+                                                <li class="btn{% if slot.start|add:' - '|add:slot.end in booked_slots %} btn-info disabled{% endif %}">
+                                                    <label>
+                                                      {% with selected_datee=selected_date|date:'Y-m-d' %}
+                                                      <input type="radio" name="selected_slot" value="{{ slot.start }} - {{ slot.end }}" required {% if is_slot_booked or selected_datee < todays_date %} disabled{% endif %}>
+                                                      {{ slot.start }} - {{ slot.end }}
+                                                  {% endwith %}
+                                                       
+                                                    </label>
+                                                </li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                                </div>
+                            </ul>
+                        </div>
+                  
+                </div>
+            </div>
+            {% if request.user.is_authenticated %}
+                        <div class="submit-section proceed-btn text-end">
+                            <button type="submit" class="btn btn-primary submit-btn">Book Appointment</button>
+                        </div>
+                  {% else %}
+                        <div class="submit-section proceed-btn text-end">
+                            <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary submit-btn">Login to proceed</a>
+                        </div>
+                    {% endif %}
+
+          </form>
+    </div>
+      
+    </div>
+</div>
+
+    </div>
+  </div>
+
+{% endblock %}

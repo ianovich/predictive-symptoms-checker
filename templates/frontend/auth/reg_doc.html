@@ -1,0 +1,101 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}{{title}} - Predictive symptoms{% endblock %} 
+{% block content %} 
+
+<div class="login-content-info">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <div class="account-content">
+                    <div class="login-shapes">
+                        <div class="shape-img-left">
+                            <img src="{% static 'assets/img/shape-01.png' %}" alt="shape-image">
+                        </div>
+                        <div class="shape-img-right">
+                            <img src="{% static 'assets/img/shape-02.png' %}" alt="shape-image">
+                        </div>
+                    </div>
+                    <div class="widget-set">
+                        <div class="account-info">
+                            <div class="widget-content multistep-form">
+                                {% comment %} <fieldset id="first"> {% endcomment %}
+                                    <div class="login-back">
+                                        <a href="{% url 'register' %}"><i class="fa-solid fa-arrow-left-long"></i>
+                                            Back</a>
+                                    </div>
+                                    <div class="login-title">
+                                        <h3>Doctor Signup</h3>
+                                        <p class="mb-0">Welcome back! Please enter your details.</p>
+                                        
+                                      
+                                    </div>
+                                    {% include 'frontend/partials/messages.html' %}
+                                    
+                                    <form action="{% url 'create_doc_account' %}" method="post">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <label class="mb-2">First Name</label>
+                                            <input type="text" name="first_name" class="form-control" placeholder="Enter Your First Name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2">Last Name</label>
+                                            <input type="text" name="last_name" class="form-control" placeholder="Enter Your Last Name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2">Email</label>
+                                            <input type="email" name="email" class="form-control" placeholder="Enter Your Email" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2">Phone Number</label>
+                                            <input class="form-control form-control-lg group_formcontrol form-control-phone" placeholder="Enter Your Phone" id="phone" name="phone" type="tel" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2">Speciality</label>
+                                            <select class="form-control form-control-lg group_formcontrol select select2-hidden-accessible" name="speciality_id" required>
+                                            <option value="">Select a speciality</option>
+                                            {% for speciality in specialities %}
+                                            <option value="{{ speciality.id }}">{{ speciality.name }}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2">Service Price</label>
+                                            <input class="form-control form-control-lg group_formcontrol form-control-phone" placeholder="Enter Your service price" id="phone" name="service_price" type="number" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2">Service Location</label>
+                                            <input type="text" name="location" class="form-control" placeholder="Enter Your Location" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2">Password</label>
+                                            <div class="pass-group">
+                                                <input type="password" name="password" class="form-control pass-input-sub" placeholder="*************" required>
+                                                <span class="feather-eye-off toggle-password-sub"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2">Confirm Password</label>
+                                            <div class="pass-group">
+                                                <input type="password" name="conf_password" class="form-control pass-input-sub" placeholder="*************" required>
+                                                <span class="feather-eye-off toggle-password-sub"></span>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Create Account</button>
+                                    </form>
+
+                                {% comment %} </fieldset> {% endcomment %}
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

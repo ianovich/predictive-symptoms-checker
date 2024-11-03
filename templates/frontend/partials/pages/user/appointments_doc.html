@@ -1,0 +1,56 @@
+{% load static %}
+<div class="card card-table mb-0">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-center mb-0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Patients</th>
+                        <th>Appt Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if appointments_list.appointments_list %}
+                    {% for appt in appointments_list.appointments_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            <h2 class="table-avatar">
+                                <a href="#" class="avatar avatar-sm me-2">
+                                    {% if appt.patient.profile_url %}
+                                    <img class="avatar-img rounded-circle" src="/media/{{ appt.patient.profile_url }}" alt="Doctor Image">
+                                    {% else %}
+                                    <img class="avatar-img rounded-circle" alt="User Image" src="{% static 'assets/img/no_img.jpg' %}">
+                                {% endif %}
+                                </a>
+                                <a href="#">{{ appt.patient.get_full_name }}
+                                    <span>Phone: {{ appt.patient.phone }}</span>
+                                </a>
+                            </h2>
+                        </td>
+                        <td>{{ appt.date|date:"d M Y" }} <span class="d-block text-info">{{ appt.appointment_time }}</span></td>
+                        <td>Ksh. {{ appt.doctor.meta.service_price }}</td>
+                        <td><span class="badge rounded-pill {% if appt.status == 'Visited' %}bg-success-light{% elif appt.status == 'Pending' %}bg-info-light{% elif appt.status == 'Scheduled' %}bg-primary-light{% endif %}">{{ appt.status }}</span></td>
+                        <td>
+                            <div class="table-action">
+                                <a href="{% url 'appointment_details' appt.id %}" class="btn btn-sm bg-info-light">
+                                 {%if appt.status == 'Visited' %} Update Prescription {%else%} Add Prescription {%endif%}
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {%else%}
+                    <tr class="text-center">
+                        <td colspan="6">No appointments found </td>
+                    </tr>
+                    {%endif%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

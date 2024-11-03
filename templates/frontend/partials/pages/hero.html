@@ -1,0 +1,32 @@
+{% load static %}
+<section class="banner-section" style="background-image: url('{% static 'assets/img/bg/hero-bg.png' %}')">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="banner-content aos" data-aos="fade-up">
+          {% comment %} <h1>Consult <span>Best Doctors</span> Your Nearby Location.</h1> {% endcomment %}
+          <h1 class="">Your Health is Your Priority and Your Wealth!</h1>
+          <img
+            src="{% static 'assets/img/icons/header-icon.svg' %}"
+            class="header-icon"
+            alt="header-icon"
+          />
+          <p>Discover your health insights with our Symptom Checker. Get personalized wellness recommendations based on your symptoms with our Health Experts. Start your journey to better health now!</p>
+          <a href="{% url 'doctors' %}" class="btn">Start Consultation</a>
+          
+        </div>
+      
+      </div>
+      <div class="col-lg-6">
+        <div class="banner-img aos" data-aos="fade-up">
+          <img
+            src="{% static 'assets/img/doktari4.jpg'%}"
+            class="img-fluid"
+            alt="patient-image"
+          />
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

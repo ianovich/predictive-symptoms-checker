@@ -1,0 +1,94 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    {% block meta %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Predictive symptoms">
+    {% endblock %}
+
+     {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
+
+    {% block favicon %}
+    <link rel="shortcut icon" href="{% static 'assets/img/hospital1.png' %}" type="image/x-icon">
+    {% endblock %}
+
+    {% block corecss %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+        <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+
+        <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/fontawesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/all.min.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="{% static 'assets/css/feather.css' %}">
+
+        <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datetimepicker.min.css' %}">
+
+        <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+
+        <link rel="stylesheet" href="{% static 'assets/css/aos.css' %}">
+
+        <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    {% endblock %}
+
+    
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+
+        {% include 'frontend/partials/header.html' %}
+
+        {% block content %}{% endblock %}
+
+        {% comment %} {% include 'includes/footer.html' %} {% endcomment %}
+
+    </div>
+
+    {% comment %} {% block jquery %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% endblock %} {% endcomment %}
+
+    {% block corejs %}
+
+        <script src="{% static 'assets/js/jquery-3.7.0.min.js' %}"></script>
+
+        <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+
+        <script src="{% static 'assets/js/feather.min.js' %}"></script>
+
+        <script src="{% static 'assets/js/moment.min.js' %}"></script>
+        <script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+
+        <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+
+        <script src="{% static 'assets/js/slick.js' %}"></script>
+
+        <script src="{% static 'assets/js/aos.js' %}"></script>
+
+        <script src="{% static 'assets/js/counter.js' %}"></script>
+
+        <script src="{% static 'assets/js/backToTop.js' %}"></script>
+
+        <script src="{% static 'assets/js/script.js' %}"></script>
+            {% endblock %}
+
+        {% comment %} <script src="assets/js/jquery-3.7.0.min.js"></script> {% endcomment %}
+
+
+</body>
+
+</html>

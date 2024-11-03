@@ -1,0 +1,82 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}{{title}} - Predictive symptoms{% endblock %}
+{% block content %} 
+
+{% include 'frontend/partials/bc.html' %}
+<div class="container">
+    <div class="pt-3 pb-3">
+        <h3 class="text-center">
+            Identify possible conditions and treatment related to your symptoms.
+        </h3>
+    </div>
+   
+    <div class="form-toggle">
+        <div class="text-center">
+            <button class="btn btn-primary toggle-button" type="button">Add symptoms to predict disease <i class="fa fa-angle-down"></i></button>
+        </div>
+        
+        <form id="symptomForm" method="post" action="#" style="display: none;">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-body" style="display: flex; flex-wrap: wrap;">
+                    {% for index, symptom in symptoms %}
+                    <div class="" style="margin: 15px;">
+                        <label>
+                            <input type="checkbox" name="selected_indices[]" value="{{ index }}"> {{ symptom }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                    <div class="col-12">
+                        <div id="errorMsg" class="alert alert-warning" role="alert" style="display: none;">You should select at least 4 symptoms.</div>
+                        <div class="text-center">
+                        <button class="btn btn-primary" type="submit">Predict Disease</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+   
+        <div class="card mt-2">
+            <div class="card-body">
+                <h3>Selected symptoms</h3>
+                <ul>
+                    {% for symptom in selected_symptoms %}
+                    {% comment %} {% for symptom in selected_indices %} {% endcomment %}
+                    <li>{{ symptom }}</li>
+                    {% endfor %}
+                </ul>
+                <h3>Predicted Disease: {{ predicted_disease }}</h3>
+                <h3>confidence Score: {{ confidence_score }}</h3>
+                {% if predicted_disease %}
+                <h3>Consult a <a href="{% url 'doctors-with-speciality' consultdoctor %}" class="btn btn-primary">{{ consultdoctor }}</a> doctor</h3>
+                {% endif %}
+            </div>
+            {% if predicted_disease %}
+            <div class="text-center mt-4 mb-4"> 
+                      <a class="btn btn-outline-primary" href="https://www.google.com/search?q={{ predicted_disease }}" target="_blank" rel="noopener noreferrer">Click here to know more about &nbsp 
+                      <span style="color: crimson;">{{ predicted_disease }}</span></a>
+          </div>
+          {% endif %}
+
+        </div>
+
+</div>
+
+<script type="text/javascript">
+document.querySelector('.toggle-button').addEventListener('click', function() {
+    var form = document.getElementById('symptomForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+});
+document.getElementById('symptomForm').addEventListener('submit', function(event) {
+    var selectedCount = document.querySelectorAll('input[name="selected_indices[]"]:checked').length;
+    if (selectedCount < 4) {
+        event.preventDefault();  // Prevent form submission
+        document.getElementById('errorMsg').style.display = 'block';  // Show error message
+    }
+});
+</script>
+
+{% endblock %}

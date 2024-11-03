@@ -1,0 +1,27 @@
+.btn-rounded {
+    /* Add rounded corners */
+    border-radius: 1rem !important; /* Use a large value to ensure fully rounded corners */
+
+    /* Padding for better aesthetics */
+    padding: 0.5rem 1rem !important;
+}
+
+.dark-outline-btn {
+    /* Border style */
+    border: 1px solid #2d3748 !important; /* Use the appropriate shade of gray for dark mode */
+
+    /* Example styles */
+    color: #2d3748 !important; /* Text color */
+    background-color: transparent !important; /* Transparent background */
+    padding: 0.5rem 1rem; /* Padding for better aesthetics */
+}
+
+.light-outline-btn {
+    /* Border style */
+    border: 1px solid #2d3748 !important; /* Use the appropriate shade of gray for light mode */
+
+    /* Example styles */
+    color: #fff !important; /* Text color */
+    background-color: #2d3748 !important; /* Transparent background */
+    padding: 0.5rem 1rem;
+}

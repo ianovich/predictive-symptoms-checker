@@ -1,0 +1,82 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}{{title}} - Predictive symptoms{% endblock %}
+{% block content %} 
+
+<div class="content top-space">
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-xl-12 col-lg-12 order-md-last order-sm-last order-last map-left"
+        >
+          <div class="row align-items-center mb-4">
+            <div class="col-md-6 col">
+              <h4>{{ total_doctors }} Doctors found</h4>
+            </div>
+           
+          </div>
+          <div class="row">
+            {% for doctor in doctors_info %}
+            <div class="col-sm-6 col-md-3 col-xl-3">
+              <div class="profile-widget">
+                <div class="doc-img">
+                  <a href="{% url 'doctor_details' doctor.id %}">
+                    {% if doctor.profile_url %}
+                        <img class="img-fluid" alt="User Image" src="/media/{{ doctor.profile_url }}">
+                    {% else %}
+                        <img class="img-fluid" alt="User Image" src="{% static 'assets/img/no_img.jpg' %}">
+                    {% endif %}
+                  </a>
+                </div>
+                <div class="pro-content">
+                  <h3 class="title">
+                    <a href="{% url 'doctor_details' doctor.id %}">{{ doctor.first_name }} {{ doctor.last_name }}</a>
+                    
+                  </h3>
+                  <p class="speciality">
+                    {{ doctor.doc_speciality }}
+                  </p>
+                  
+                  <ul class="available-info">
+                    <li>
+                      <i class="fas fa-map-marker-alt"></i> {{ doctor.location }}
+                    </li>
+                    
+                    <li>
+                      <i class="far fa-money-bill-alt"></i>Ksh. {{ doctor.service_price }}
+                      <i
+                        class="fas fa-info-circle"
+                        data-bs-toggle="tooltip"
+                        title="Service price per 30 min"
+                      ></i>
+                    </li>
+                  </ul>
+                  <div class="row row-sm">
+                    <div class="col-12">
+                      <a href="{% url 'doctor_details' doctor.id %}" class="btn view-btn"
+                        >View Profile</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% comment %} <div class="load-more text-center">
+            <a class="btn btn-primary btn-sm" href="javascript:void(0);"
+              >Load More</a
+            >
+          </div> {% endcomment %}
+        </div>
+
+        {% comment %} <div class="col-xl-6 col-lg-12 map-right grid-list-map">
+          <div>
+            hey
+          </div>
+        </div> {% endcomment %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

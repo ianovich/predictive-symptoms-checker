@@ -1,0 +1,64 @@
+{% load static %}
+
+<div class="profile-sidebar">
+  <div class="widget-profile pro-widget-content">
+    <div class="profile-info-widget">
+      <a href="#" class="booking-doc-img">
+        {% if request.user.profile_url %}
+        <img
+          src="{{ MEDIA_URL }}{{ request.user.profile_url.url }}"
+          alt="User Image"
+        />
+        {% else %}
+        <img src="{% static 'assets/img/no_img.jpg' %}" alt="User Image" />
+        {% endif %}
+      </a>
+      <div class="profile-det-info">
+        <h3>{{ request.user.first_name }} {{ request.user.last_name }}</h3>
+        {% if request.user.role_id == 1 %}
+        <div class="patient-details">
+          {% if request.user.speciality %}
+          <h5 class="mb-0">{{ request.user.speciality.name }}</h5>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="dashboard-widget">
+    <nav class="dashboard-menu">
+      <ul>
+        <li class="{% if request.path == '/dashboard' %}active{% endif %}">
+          <a href="{% url 'user_dashboard' %}">
+            <i class="fas fa-columns"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'user_appointments' %}">
+            <i class="fas fa-calendar-check"></i>
+            <span>Appointments</span>
+          </a>
+        </li>
+        <li class="{% if request.path == '/profile' %}active{% endif %}">
+          <a href="{% url 'user_profile' %}">
+            <i class="fas fa-user-cog"></i>
+            <span>Profile Settings</span>
+          </a>
+        </li>
+        {% comment %} <li>
+          <a href="#">
+            <i class="fas fa-lock"></i>
+            <span>Change Password</span>
+          </a>
+        </li> {% endcomment %}
+        <li>
+          <a href="{% url 'logout' %}">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

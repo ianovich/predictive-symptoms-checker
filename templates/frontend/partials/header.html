@@ -1,0 +1,121 @@
+{% load static %}
+<header class="header header-custom header-fixed header-one" style="background-image: url('{% static 'assets/img/bg/hero-bg.png' %}')">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg header-nav">
+      <div class="navbar-header">
+        <a id="mobile_btn" href="javascript:void(0);">
+          <span class="bar-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </a>
+        <a href="{% url 'home' %}" class="navbar-brand logo">
+          <img src="{% static 'assets/img/hospital1.png' %}" class="img-fluid" alt="Logo" />
+        </a>
+      </div>
+      <div class="main-menu-wrapper">
+        <div class="menu-header">
+          <a href="{% url 'home' %}" class="menu-logo">
+            <img src="{% static 'assets/img/hospital1.png' %}" class="img-fluid" alt="Logo" />
+          </a>
+          <a id="menu_close" class="menu-close" href="javascript:void(0);">
+            <i class="fas fa-times"></i>
+          </a>
+        </div>
+        <ul class="main-nav">
+          <li class="{% if request.path == '/' %}active{% endif %}">
+            <a href="{% url 'home' %}"
+              >Home</i
+            ></a>
+          </li>
+
+          <li class="{% if request.path == '/symptom-checker' %}active{% endif %}">
+            <a href="{% url 'symptom_checker' %}"
+              >Symptom Checker</i
+            ></a>
+          </li>
+
+          {% comment %} <li class="{% if request.path == '/doctors' %}active{% endif %}">
+            <a href="{% url 'doctors' %}"
+              >Find a Doctor</i
+            ></a>
+          </li> {% endcomment %}
+
+          <li class="{% if request.path == '/services' %}active{% endif %}">
+            <a href="{% url 'services' %}"
+              >Services</i
+            ></a>
+          </li>
+
+          <li class="{% if request.path == '/contacts' %}active{% endif %}">
+            <a href="{% url 'contacts' %}"
+              >Contact</i
+            ></a>
+          </li>
+          
+          {% comment %} <li class="login-link"><a href="login.html">Login / Signup</a></li> {% endcomment %}
+          {% if request.user.is_authenticated %}
+           
+            <ul class="nav header-navbar-rht">
+              <li class="nav-item dropdown has-arrow logged-item">
+                  <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                      <span class="user-img">
+                        {% if request.user.profile_url %}
+                          <img class="rounded-circle" src="{{ MEDIA_URL }}{{ request.user.profile_url.url }}" width="31"
+                              alt="prof img"> 
+                              {% else %}
+                              <img class="rounded-circle" src="{% static 'assets/img/no_img.jpg' %}" width="31"
+                              alt="prof img">
+                              {% endif %}
+                              {{ request.user.first_name }} {{ request.user.last_name }}
+                      </span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-end">
+                      <div class="user-header">
+                          <div class="avatar avatar-sm">
+                            {% if request.user.profile_url %}
+                              <img src="{{ MEDIA_URL }}{{ request.user.profile_url.url }}" alt="User Image"
+                                  class="avatar-img rounded-circle">
+                            {% else %}
+                            <img src="{% static 'assets/img/no_img.jpg' %}" alt="User Image"
+                            class="avatar-img rounded-circle">
+                            {% endif %}
+                          </div>
+                          <div class="user-text">
+                              <h6>{{ request.user.first_name }} {{ request.user.last_name }}</h6>
+                              {% if request.user.is_superuser%}
+                              <p class="text-muted mb-0">Superuser</p>
+                              {% elif request.user.role_id == 1 %}
+                              <p class="text-muted mb-0">Doctor</p>
+                              {% elif request.user.role_id == 2 %}
+                              <p class="text-muted mb-0">Patient</p>
+                              {% endif %}
+                          </div>
+                      </div>
+                      {% if request.user.is_superuser%}
+                      <a class="dropdown-item" href="/admin/">Dashboard</a>
+                      {% elif request.user.role_id == 1 %}
+                      <a class="dropdown-item" href="{% url 'user_dashboard' %}">Doctor Dashboard</a>
+                      <a class="dropdown-item" href="{% url 'user_profile' %}">Profile Settings</a>
+                      {% elif request.user.role_id == 2 %}
+                      <a class="dropdown-item" href="{% url 'user_dashboard' %}">Patient Dashboard</a>
+                      <a class="dropdown-item" href="{% url 'user_profile' %}">Profile Settings</a>
+                      {% endif %}
+                      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                  </div>
+              </li>
+          </ul>
+          {% else %}
+          <li class="register-btn">
+            <a href="{% url 'register' %}" class="btn btn-rounded dark-outline-btn "><i class="feather-user"></i>Register</a>
+          </li>
+          <li class="register-btn">
+            <a href="{% url 'login' %}" class="btn btn-rounded light-outline-btn border-0"><i class="feather-lock"></i>Login</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>

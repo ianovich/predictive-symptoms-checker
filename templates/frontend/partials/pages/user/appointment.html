@@ -1,0 +1,54 @@
+{% load static %}
+<div class="card card-table mb-0">
+    <div class="card-body">
+        <h3 class="p-2">Appointment Info</h3>
+        <div class="doctor-widget">
+            <div class="doc-info-left">
+                <div class="doctor-img">
+                  {% if appointment.doctor.profile_url %}
+                  <img src="/media/{{  appointment.doctor.profile_url }}" class="img-fluid"
+                        alt="User Image">
+                  {% else %}
+                    <img src="{% static 'assets/img/no_img.jpg' %}" class="img-fluid"
+                        alt="User Image">
+                        {% endif %}
+                </div>
+                <div class="doc-info-cont">
+                    <h4 class="doc-name">{{  appointment.doctor.first_name }} {{  appointment.doctor.last_name }}</h4>
+                    
+                    <div class="clinic-details">
+                        <p class="doc-location"><i class="fas fa-phone"></i> 0{{  appointment.doctor.phone }}</p>
+                        <p class="doc-location"><i class="fas fa-map-marker-alt"></i> {{  appointment.doctor.location }}</p>
+
+                        Booked Service: <span class="text-fw-fw-bolder">{{  appointment.doctor.speciality }}</span> <br>
+                        Service price:<span class="text-fw-bolder"> Ksh.{{  appointment.doctor.meta.service_price }}</span> per 30 mins
+                       
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="doc-info-right">
+                <div class="clini-infos">
+                    <ul>
+                        <li>
+                            Appointment Status: <br>
+                            <span class="badge rounded-pill {% if appointment.status == 'Visited' %}bg-success-light{% elif appointment.status == 'Pending' %}bg-info-light{% elif appointment.status == 'Scheduled' %}bg-primary-light{% endif %}">{{ appointment.status }}</span>
+                        </li>
+                        <li>
+                            {{ appointment.date|date:"d M Y" }} <span class="d-block text-info">{{ appointment.appointment_time }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-2">
+    <div class="card-body">
+        <h3 class="p-2">
+            Remarks
+        </h3>
+        <p>{{ appointment.remarks }}</p>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}{{title}} - Predictive symptoms{% endblock %}
+{% block content %} 
+{% include 'frontend/partials/pages/hero.html' %}
+
+<section class="section section-specialities">
+  <div class="container-fluid">
+    <div class="section-header text-center aos" data-aos="fade-up">
+      <h2>Delivering top-notch healthcare services</h2>
+      <p class="sub-title">
+        Delivering exceptional healthcare expertise, our Health System guarantees world-class care accessible to all.
+      </p>
+    </div>
+    <div class="row justify-content-center">
+        <div class="card mx-4" style="width: 18rem;">
+            <img src="{% static 'assets/img/new/icon01.png' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Find A Doctor</h5>
+              <p class="card-text">Accessible world-class care for all is our commitment. Our health system delivers unparalleled, expert healthcare—from the laboratory to the clinic.</p>
+              <a href="#" class="btn btn-primary"><i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="card" style="width: 18rem;">
+            <img src="{% static 'assets/img/new/icon02.png' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Book Appointment</h5>
+              <p class="card-text">Accessible world-class care for all is our commitment. Our health system delivers unparalleled, expert healthcare—from the laboratory to the clinic.</p>
+              <a href="#" class="btn btn-primary"><i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
